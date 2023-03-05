@@ -1,0 +1,16 @@
+{% load draw_menu %}
+
+<ul>
+{% for obj in menu_items %}
+    <a style="{% if obj.url|remove_url_slash == request.get_full_path|remove_url_slash %}color: red{% endif %}"
+       href="/{{ obj.url|remove_url_slash }}">
+        {{ obj.title }}
+    </a>
+
+    {% if obj.children %}
+    <ul>
+        {% include 'menubar/menu.html' with menu_items=obj.children.all %}
+    </ul>
+    {% endif %}
+{% endfor %}
+</ul>
